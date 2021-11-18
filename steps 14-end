@@ -1,0 +1,86 @@
+#   a123_apple_1.py
+import turtle as trtl
+import random as rand
+#-----setup-----
+apple_image = "apple.gif" # Store the file name of your shape
+
+wn = trtl.Screen()
+wn.setup(width=1.0, height=1.0)
+wn.addshape(apple_image) # Make the screen aware of the new file
+wn.bgpic("background.gif")
+
+
+apple_list = []
+apple_letters = []
+letters = ["A", "S", "D", "F"]
+
+for i in range(5):
+  tempApple = trtl.Turtle()
+  apple_list.append(tempApple)
+  apple_letters.append(rand.choice(letters))
+
+#-----functions-----
+# given a turtle, set that turtle to be shaped by the image file
+def draw_apple(index):
+  global apple_letter
+  apple_list[index].pu()
+  apple_list[index].shape(apple_image)
+  wn.tracer(False)
+  apple_list[index].setx(rand.randint(-175,175))
+  apple_list[index].sety(rand.randint(-25,100))
+  
+  apple_list[index].sety(apple_list[index].ycor()-35)
+  apple_list[index].color("white")
+  apple_list[index].write(apple_letters[index], align="center", font=("Arial", 40, "bold"))
+  apple_list[index].sety(apple_list[index].ycor()+35)
+  apple_list[index].showturtle()
+  wn.tracer(True)
+  wn.update()
+  
+
+def drop_apple(index):
+  apple_list[index].pu()
+  apple_list[index].clear()
+  apple_list[index].sety(-150)
+  apple_list[index].hideturtle()
+  apple_letters[index] = rand.choice(letters)
+  draw_apple(index)
+ 
+  
+def typedA():
+  for i in range(5):
+    if apple_letters[i] == "A":
+      drop_apple(i)
+    
+    
+def typedS():
+  for i in range(5):
+    if apple_letters[i] == "S":
+      drop_apple(i)
+    
+    
+def typedD():
+  for i in range(5):
+    if apple_letters[i] == "D":
+      drop_apple(i)
+    
+    
+def typedF():
+  for i in range(5):
+    if apple_letters[i] == "F":
+      drop_apple(i)
+    
+  
+
+
+#-----function calls-----
+for i in range(5):
+  draw_apple(i)
+
+wn.onkeypress(typedA, "a")
+wn.onkeypress(typedS, "s")
+wn.onkeypress(typedD, "d")
+wn.onkeypress(typedF, "f")
+wn.listen()
+
+wn.mainloop()
